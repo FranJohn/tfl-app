@@ -1,34 +1,18 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import TubeLinesTable from './components/TubeLinesTable';
-import { getTubeLines, getDetailedTubeLine, TubeLine, DetailedTubeLine } from './api/api';
 import AdditionalDetails from './components/AdditionalDetails';
 import FilterPanel from './components/FilterPanel';
+import { TubeLine, getTubeLines } from './api/api';
 
 const Home: React.FC = () => {
   const [tubeLines, setTubeLines] = useState<TubeLine[]>([]);
-  const [additionalData, setAdditionalData] = useState<DetailedTubeLine | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [additionalData, setAdditionalData] = useState<TubeLine | null>(null);
   const [selectedLine, setSelectedLine] = useState<TubeLine | null>(null);
   const [isDetailsVisible, setDetailsVisible] = useState<boolean>(false);
   const [filter, setFilter] = useState<string>('');
   const [hiddenStations, setHiddenStations] = useState<string[]>([]); 
   const [filterVisible, setFilterVisible] = useState<boolean>(false); 
-
-  // Function to toggle filter panel visibility
-  const toggleFilterVisibility = () => {
-    setFilterVisible(!filterVisible);
-  };
-
-  // Function to toggle the visibility of a station
-  const toggleStationVisibility = (stationId: string) => {
-    if (hiddenStations.includes(stationId)) {
-      setHiddenStations(hiddenStations.filter(id => id !== stationId));
-    } else {
-      setHiddenStations([...hiddenStations, stationId]);
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,10 +20,8 @@ const Home: React.FC = () => {
         const data = await getTubeLines();
         setTubeLines(data);
       } catch (error) {
-        setError('Error fetching tube lines data');
-      } finally {
-        setLoading(false);
-      }
+        console.error('Error fetching tube lines data', error);
+      } 
     };
   
     fetchData(); 
@@ -52,28 +34,34 @@ const Home: React.FC = () => {
       clearInterval(intervalId); 
     };
   }, []); 
-  
 
-  // Function to handle line click and set the selectedLine state
-  const handleLineClick = async (line: TubeLine) => {
-    const addData = await getDetailedTubeLine(line.id);
-    setAdditionalData(addData);
+  const handleLineClick = (line: TubeLine) => {
+    setAdditionalData(line);
     setSelectedLine(line);
     setDetailsVisible(true);
   };
 
-  // Function to close additional details
   const handleCloseDetails = () => {
     setSelectedLine(null);
     setDetailsVisible(false);
   };
 
-  // Function to handle input change and update the filter state
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilter(event.target.value);
   };
 
-  // Filter the tube lines based on the filter input
+  const toggleFilterVisibility = () => {
+    setFilterVisible(!filterVisible);
+  };
+
+  const toggleStationVisibility = (stationId: string) => {
+    setHiddenStations(prevStations => 
+      prevStations.includes(stationId)
+        ? prevStations.filter(id => id !== stationId)
+        : [...prevStations, stationId]
+    );
+  };
+
   const filteredTubeLines = tubeLines
     .filter(line =>
       line.name.toLowerCase().includes(filter.toLowerCase())
