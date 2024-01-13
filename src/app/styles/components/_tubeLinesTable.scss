@@ -26,10 +26,10 @@
     @media (max-width: 768px) {
         flex-direction: column;
         align-items: flex-start;
-
+    
         .line-details {
-            margin-top: 8px;
-            text-align: left;
+          margin-top: 8px;
+          text-align: left;
         }
     }
 }
@@ -102,5 +102,9 @@
     .elizabeth {
         @include tube-line;
         border-color: #6950a1;
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
     }
 }
