@@ -1,41 +1,107 @@
-.tube-lines-table {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    padding: 1rem;
-}
-  
-.tube-line {
+@mixin tube-line() {
     display: flex;
     align-items: center;
     border: 3px solid transparent;
     padding: 16px;
     text-align: center;
     border-radius: var(--border-radius);
-  
+
+    &:hover {
+        cursor: pointer;
+        background-color: $hover-color; 
+    }
+
     .line-details {
         flex: 1;
-  
+
         .line-name {
             font-weight: bold;
             margin-top: 8px;
-            color: var(--information-color);
         }
-  
+
         .status {
             margin-top: 8px;
-            color: var(--information-color);
         }
     }
 
     @media (max-width: 768px) {
         flex-direction: column;
         align-items: flex-start;
-    
+
         .line-details {
             margin-top: 8px;
             text-align: left;
         }
     }
 }
-  
+
+.tube-lines-table {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 1rem;
+
+    .piccadilly {
+        @include tube-line;
+        border-color: #0019A8;
+    }
+    
+    .bakerloo {
+        @include tube-line;
+        border-color: #B26313;
+    }
+
+    .central {
+        @include tube-line;
+        border-color: #DC241F;
+    }
+
+    .circle {
+        @include tube-line;
+        border-color: #FFD329;
+    }
+
+    .district {
+        @include tube-line;
+        border-color: #007D32;
+    }
+
+    .hammersmith,
+    .hammersmithcity,
+    .hammersmith-city,
+    .hammersmithandcity {
+        @include tube-line;
+        border-color: #F4A9BE;
+    }
+
+    .jubilee {
+        @include tube-line;
+        border-color: #A1A5A7;
+    }
+
+    .metropolitan {
+        @include tube-line;
+        border-color: #9B0058;
+    }
+
+    .northern {
+        @include tube-line;
+        border-color: #000;
+    }
+
+    .victoria {
+        @include tube-line;
+        border-color: #0098D8;
+    }
+
+    .waterlooandcity,
+    .waterloo-city {
+        @include tube-line;
+        border-color: #93CEBA;
+    }
+
+    .elizabeth {
+        @include tube-line;
+        border-color: #6950a1;
+    }
+}

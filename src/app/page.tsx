@@ -1,65 +1,27 @@
+'use client'
+import React, {useEffect, useState} from 'react';
 import TubeLinesTable from './components/TubeLinesTable';
+import { getTubeLines, TubeLine } from './api/api';
 
 const Home: React.FC = () => {
-  // Mock data for tube lines
-  const tubeLines = [
-    {
-      id: '1',
-      name: 'Piccadilly',
-      lineStatuses: [{ statusSeverityDescription: 'Good Service' }],
-    },
-    {
-      id: '2',
-      name: 'Central',
-      lineStatuses: [{ statusSeverityDescription: 'Minor Delays' }],
-    },
-    {
-      id: '3',
-      name: 'Central',
-      lineStatuses: [{ statusSeverityDescription: 'Minor Delays' }],
-    },
-    {
-      id: '4',
-      name: 'Central',
-      lineStatuses: [{ statusSeverityDescription: 'Minor Delays' }],
-    },
-    {
-      id: '5',
-      name: 'Central',
-      lineStatuses: [{ statusSeverityDescription: 'Minor Delays' }],
-    },
-    {
-      id: '6',
-      name: 'Central',
-      lineStatuses: [{ statusSeverityDescription: 'Minor Delays' }],
-    },
-    {
-      id: '7',
-      name: 'Central',
-      lineStatuses: [{ statusSeverityDescription: 'Minor Delays' }],
-    },
-    {
-      id: '8',
-      name: 'Central',
-      lineStatuses: [{ statusSeverityDescription: 'Minor Delays' }],
-    },
-    {
-      
-      id: '9',
-      name: 'Central',
-      lineStatuses: [{ statusSeverityDescription: 'Minor Delays' }],
-    },
-    {
-      id: '10',
-      name: 'Central',
-      lineStatuses: [{ statusSeverityDescription: 'Minor Delays' }],
-    },
-    {
-      id: '11',
-      name: 'Central',
-      lineStatuses: [{ statusSeverityDescription: 'Minor Delays' }],
-    },
-  ];
+  const [tubeLines, setTubeLines] = useState<TubeLine[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getTubeLines();
+        setTubeLines(data);
+      } catch (error) {
+        setError('Error fetching tube lines data');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <main>
