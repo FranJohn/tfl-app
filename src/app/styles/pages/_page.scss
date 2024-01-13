@@ -1,0 +1,16 @@
+.additional-information {
+    position: fixed;
+    top: 0;
+    right: 0; 
+    width: 300px;
+    height: 100%;
+    background-color: $information-color;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 1s ease-in-out;
+  
+    &.hidden {
+      right: -100%; 
+      transition: right 1s ease-in-out;
+    }
+}
+  

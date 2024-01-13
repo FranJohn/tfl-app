@@ -2,6 +2,9 @@
 @import 'globals';
 @import 'base';
 
+@import 'pages/page';
+
 /* Import Component Specific SCSS files */
 @import 'components/titleBar';
 @import 'components/tubeLinesTable';
+@import 'components/additionalDetails';
