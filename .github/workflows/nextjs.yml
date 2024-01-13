@@ -104,6 +104,8 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           path: ./out
+        env:
+          NEXT_PUBLIC_TFL_API_PRIMARY_KEY: ${{ secrets.NEXT_PUBLIC_TFL_API_PRIMARY_KEY }}
 
   # Deployment job
   deploy:
