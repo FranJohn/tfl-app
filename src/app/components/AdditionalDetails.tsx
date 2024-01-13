@@ -15,7 +15,8 @@ const AdditionalDetails: React.FC<AdditionalDetailsProps> = ({ line, onClose }) 
       <button onClick={onClose}>&gt;</button>
       <div className="content">
         <h2>{line.name} Line:</h2>
-        <p>Status: {line.reason}</p>
+        <p>Status:</p>
+        <p>{line.reason}</p>
       </div>
     </div>
   );
