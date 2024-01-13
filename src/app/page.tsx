@@ -1,9 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import TubeLinesTable from '../components/TubeLinesTable';
-import AdditionalDetails from '../components/AdditionalDetails';
-import FilterPanel from '../components/FilterPanel';
-import { TubeLine, getTubeLines } from '../api/api';
+import TubeLinesTable from './components/TubeLinesTable';
+import AdditionalDetails from './components/AdditionalDetails';
+import FilterPanel from './components/FilterPanel';
+import { TubeLine, getTubeLines } from './api/api';
 
 const Home: React.FC = () => {
   const [tubeLines, setTubeLines] = useState<TubeLine[]>([]);
