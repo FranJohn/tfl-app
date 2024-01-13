@@ -19,7 +19,7 @@ export default function RootLayout({
       <head>
         <link rel="shortcut icon" href="/images/favicon.ico" />
       </head>
-      <body className={inter.className}>
+      <body>
         <TitleBar backgroundColor="#597aa0" textColor="#ffffff" title="Tube Track: Real-time Tube Line Information" />
         {children}
       </body>
