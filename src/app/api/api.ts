@@ -21,9 +21,6 @@ export const getTubeLines = async (): Promise<TubeLine[] | undefined> => {
       if (!apiKey) {
         throw new Error('TFL API key not provided.');
       }
-
-      console.log("apiKey");
-      console.log(apiKey);
   
       const response = await fetch('https://api.tfl.gov.uk/Line/Mode/tube/Status', {
         headers: {
@@ -33,30 +30,26 @@ export const getTubeLines = async (): Promise<TubeLine[] | undefined> => {
       });
 
       if (response.status === 429) {
-        console.log('Rate limit exceeded. Waiting for 1 minute before retrying.');
         setTimeout(() => getTubeLines(), 60000); 
         return;
       }
-
-      console.log("response");
-      console.log(response);
   
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
   
       const data: Line[] = await response.json();
-      console.log(data);
       const tubeLines: TubeLine[] = data.map((datum) => {
         const lineStatus = datum.lineStatuses && datum.lineStatuses.length > 0
           ? datum.lineStatuses[0]
           : { statusSeverityDescription: 'Unknown', reason: '' };
-  
+        
+          const reason = lineStatus.reason ? lineStatus.reason : lineStatus.statusSeverityDescription;
         const tubeLine: TubeLine = {
           name: datum.name,
           id: datum.id,
           statusSeverityDescription: lineStatus.statusSeverityDescription,
-          reason: lineStatus.reason,
+          reason: reason,
         };
   
         return tubeLine;
