@@ -16,6 +16,7 @@
 
   p {
     margin: 8px;
+    align-self: center;
   }
 
   button {
@@ -26,5 +27,9 @@
     background-color: $user-control-color;
     height: 100%;
     padding: 5px;
+  }
+
+  .content {
+    padding: 16px;
   }
 }

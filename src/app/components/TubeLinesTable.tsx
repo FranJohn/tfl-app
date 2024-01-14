@@ -2,7 +2,7 @@ import React from 'react';
 import { TubeLine } from '../api/api';
 
 interface TubeLinesTableProps {
-  tubeLines: TubeLine[];
+  tubeLines: TubeLine[] | undefined;
   onLineClick: (line: TubeLine) => void;
   selectedLine: TubeLine | null; 
 }
@@ -15,7 +15,7 @@ const TubeLinesTable: React.FC<TubeLinesTableProps> = ({ tubeLines, onLineClick,
 
   return (
     <div className="tube-lines-table">
-      {tubeLines.map((line) => (
+      {tubeLines?.map((line) => (
         <div key={line.id} className={`tube-line ${line.id}`} onClick={() => handleLineClick(line)}>
           <div className="line-details">
             <p className="line-name">{line.name}</p>

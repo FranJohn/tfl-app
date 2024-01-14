@@ -14,7 +14,7 @@ export interface TubeLine {
     reason:string;
 }
 
-export const getTubeLines = async (): Promise<TubeLine[]> => {
+export const getTubeLines = async (): Promise<TubeLine[] | undefined> => {
     try {
       const apiKey = process.env.NEXT_PUBLIC_TFL_API_PRIMARY_KEY;
   
@@ -28,23 +28,28 @@ export const getTubeLines = async (): Promise<TubeLine[]> => {
           'app_key': apiKey,
         },
       });
+
+      if (response.status === 429) {
+        setTimeout(() => getTubeLines(), 60000); 
+        return;
+      }
   
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
   
       const data: Line[] = await response.json();
-      console.log(data);
       const tubeLines: TubeLine[] = data.map((datum) => {
         const lineStatus = datum.lineStatuses && datum.lineStatuses.length > 0
           ? datum.lineStatuses[0]
           : { statusSeverityDescription: 'Unknown', reason: '' };
-  
+        
+          const reason = lineStatus.reason ? lineStatus.reason : lineStatus.statusSeverityDescription;
         const tubeLine: TubeLine = {
           name: datum.name,
           id: datum.id,
           statusSeverityDescription: lineStatus.statusSeverityDescription,
-          reason: lineStatus.reason,
+          reason: reason,
         };
   
         return tubeLine;
