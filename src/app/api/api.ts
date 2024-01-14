@@ -21,6 +21,9 @@ export const getTubeLines = async (): Promise<TubeLine[]> => {
       if (!apiKey) {
         throw new Error('TFL API key not provided.');
       }
+
+      console.log("apiKey");
+      console.log(apiKey);
   
       const response = await fetch('https://api.tfl.gov.uk/Line/Mode/tube/Status', {
         headers: {
@@ -28,6 +31,9 @@ export const getTubeLines = async (): Promise<TubeLine[]> => {
           'app_key': apiKey,
         },
       });
+
+      console.log("response");
+      console.log(response);
   
       if (!response.ok) {
         throw new Error('Network response was not ok');
