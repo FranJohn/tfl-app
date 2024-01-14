@@ -14,7 +14,7 @@ export interface TubeLine {
     reason:string;
 }
 
-export const getTubeLines = async (): Promise<TubeLine[]> => {
+export const getTubeLines = async (): Promise<TubeLine[] | undefined> => {
     try {
       const apiKey = process.env.NEXT_PUBLIC_TFL_API_PRIMARY_KEY;
   
@@ -31,6 +31,12 @@ export const getTubeLines = async (): Promise<TubeLine[]> => {
           'app_key': apiKey,
         },
       });
+
+      if (response.status === 429) {
+        console.log('Rate limit exceeded. Waiting for 1 minute before retrying.');
+        setTimeout(() => getTubeLines(), 60000); 
+        return;
+      }
 
       console.log("response");
       console.log(response);

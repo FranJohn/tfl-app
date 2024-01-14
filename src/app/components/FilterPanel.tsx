@@ -6,7 +6,7 @@ interface FilterPanelProps {
     hiddenStations: string[];
     onFilterChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onToggleStationVisibility: (stationId: string) => void;
-    tubeLines: TubeLine[];
+    tubeLines: TubeLine[] | undefined;
     onClose: () => void; 
 }
 
@@ -36,7 +36,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             />
 
             <div className="station-list">
-                {tubeLines.map((line) => (
+                {tubeLines?.map((line) => (
                 <label key={line.id} className="station-label">
                     <input
                         type="checkbox"
