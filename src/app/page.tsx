@@ -6,7 +6,7 @@ import FilterPanel from './components/FilterPanel';
 import { TubeLine, getTubeLines } from './api/api';
 
 const Home: React.FC = () => {
-  const [tubeLines, setTubeLines] = useState<TubeLine[]>([]);
+  const [tubeLines, setTubeLines] = useState<TubeLine[] | undefined>([]);
   const [additionalData, setAdditionalData] = useState<TubeLine | null>(null);
   const [selectedLine, setSelectedLine] = useState<TubeLine | null>(null);
   const [isDetailsVisible, setDetailsVisible] = useState<boolean>(false);
@@ -62,11 +62,9 @@ const Home: React.FC = () => {
     );
   };
 
-  const filteredTubeLines = tubeLines
-    .filter(line =>
+  const filteredTubeLines = tubeLines?.filter(line =>
       line.name.toLowerCase().includes(filter.toLowerCase())
-    )
-    .filter(line => !hiddenStations.includes(line.id));
+    ).filter(line => !hiddenStations.includes(line.id));
 
   return (
     <main>
